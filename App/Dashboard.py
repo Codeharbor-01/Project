@@ -314,47 +314,54 @@ st.markdown("""
 """,unsafe_allow_html=True)
 
 st.markdown("""
-    <div class='container'>
-        <footer class='footer'>
-            <li><a href = '#Introduction'>📌Introduction</a></li>
-            <li><a href = '#objectives'>🎯Objectives</a></li>
-            <li><a href = '#dataset'>📃Data Set</a></li>
-            <li><a href = '#libraries'>📖Libraries</a></li>
-            <li><a href = '#models'>⚙️Models</a></li>
-            <li><a href = '#goal'>⚽Project Goal</a></li>
-        </footer>
+    <div class='footer'>
+        <div class='footer-column1'>
+            <a href = '#Introduction'>📌Introduction</a>
+            <a href = '#objectives'>🎯Objectives</a>
+            <a href = '#dataset'>📃Data Set</a>
+            <a href = '#libraries'>📖Libraries</a>
+            <a href = '#models'>⚙️Models</a>
+            <a href = '#goal'>⚽Project Goal</a>
 
-        <div class = 'others'>
-            <li>Email</li>
-            <li><a href='#'></a></li>
-        </div>
     </div>
 
     <style>
-        .footer li{
-            list-style:None;
-            line-height:1;
-        }
-
-        .footer a{
+        .footer-column1 a{
+            display:flex;
+            flex-direction:column;
             text-decoration:None;
             color:white;
             font-size:12px;
-            
         }
 
-        footer{
-            margin-top:50px;
-            padding:20px 20px;
-            width:100%;
-            background-color:black;
-            bottom:0;
-
-        }
-
-        .container{
+        .footer{
+            margin-top:20px;
             display:flex;
-            flex:1;
+            gap:200px;
+            background-color:black;
+            padding:20px 20px;
+        }
+
+    </style>
+
+    <div class = 'footer-column2'>
+        <a href = 'mailto:aadritthapa01@gmail.com'>✉️Email</a>
+        <a href = '#'>📞Contact Us</a>
+    </div>
+
+    <div class = 'footer-column3'>
+        <a href = 'https://github.com/Codeharbor-01/Project'>
+            🔗Github
+        </a>
+    </div>
+
+    <style>
+        .footer-column2 a,.footer-column3 a{
+            display:flex;
+            flex-direction:column;
+            text-decoration:None;
+            color:white;
+            font-size:12px;
         }
     </style>
 """,unsafe_allow_html=True)
