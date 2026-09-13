@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
 
 st.set_page_config('Student Grade Prediction System')
 # fig,ax = plt.subplots(figsize=(6,3))
@@ -102,7 +103,7 @@ def randomizer():
     st.dataframe(df.sample(number))
 randomizer_button = st.button(label='Randomize Data',on_click=randomizer())
 
-st.subheader('**Libraries**',anchor='libraries')
+st.subheader('**📖Libraries**',anchor='libraries')
 st.write('')
 st.markdown("""
     <div class='tab'>
@@ -174,4 +175,186 @@ st.markdown("""
 """,unsafe_allow_html=True)
 
 st.write('')
-st.subheader('**Models Trained**',anchor='models')
+st.subheader('**⚙️Models Trained**',anchor='models')
+
+st.markdown("""
+    <div class = 'KNN'>
+        <p class = 'num'>1️⃣</p>
+        <div class= 'text'>
+            <p class = 'title1'>
+                <strong>🔍KNN Regressor</strong>
+            </p>
+            <p>
+                K-Nearest Neighbors Regressor (KNN) predicts a student's numerical score by looking at the scores of the most similar students in the training data.<br>
+                <br>
+                Works based on : Distance between data points.
+            </p>
+        </div>
+    </div>
+
+    <div class ='linear'>
+        <p class = 'num'>2️⃣</p>
+        <div class = 'text'>
+            <p class = 'title1'>
+                <strong>📈Linear Model</strong>
+            </p>
+            <p>
+                Linear Regression predicts a numerical score by finding a linear relationship between student features and the final exam score.<br>
+                <br>
+                Works well when relationships between features and the target are approximately linear.
+            </p>
+        </div>
+    </div>
+
+    <div class ='SVR'>
+        <p class = 'num'>3️⃣</p>
+        <div class = 'text'>
+            <p class = 'title1'>
+                <strong>🌀SVR Model</strong>
+            </p>
+            <p>
+                Linear Regression predicts a numerical score by finding a linear relationship between student features and the final exam score.<br>
+                <br>
+                Works well when relationships between features and the target are approximately linear.
+            </p>
+        </div>
+    </div>
+
+    <style>
+
+        .KNN .num{
+            font-size:90px;
+            padding:20px 10px;
+        }
+
+        .KNN .title1{
+            font-size:25px;
+        }
+        .KNN{
+            padding:20px 20px;
+            display:flex;
+            gap:60px;
+            flex:1;
+            border:1px solid black;
+            border-radius:10px;
+            box-shadow: 0 2px 10px lightgrey;
+            margin-bottom:20px;
+            transition:0.3s;
+        }
+
+        .linear .num{
+            font-size:90px;
+            padding:20px 10px;
+        }
+        
+        .linear .title1{
+            font-size:25px;
+        }
+
+        .linear{
+            padding:20px 20px;
+            display:flex;
+            gap:60px;
+            flex:1;
+            border:1px solid black;
+            border-radius:10px;
+            box-shadow: 0 2px 10px lightgrey;
+            margin-bottom:20px;
+            transition:0.3s;
+        }
+
+        .SVR .num{
+            font-size:90px;
+            padding:20px 10px;
+        }
+    
+        .SVR .title1{
+            font-size:25px;
+        }
+        
+        .SVR{
+            padding:20px 20px;
+            display:flex;
+            gap:60px;
+            flex:1;
+            border:1px solid black;
+            border-radius:10px;
+            box-shadow: 0 2px 10px lightgrey;
+            margin-bottom:20px;
+            transition:0.3s;
+        }
+
+        .KNN:hover,.linear:hover,.SVR:hover{
+            transform:translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+    </style>
+
+    <br>
+""",unsafe_allow_html=True)
+
+st.subheader('**⚽Project Goal**',anchor='goal')
+st.markdown("""
+    <div class='goal'>
+        <p class = 'goal_text'>
+            The main goal of this project is to 
+            <strong>demonstrate how machine learning and data analysis can be used to understand student performance and provide meaningful academic predictions.</strong>
+        </p>
+    </div>
+
+    <style>
+        .goal{
+            border: 1px solid gray;
+            padding:20px 20px;
+            border-radius:10px;
+        }
+
+
+    </style>
+""",unsafe_allow_html=True)
+
+st.markdown("""
+    <div class='container'>
+        <footer class='footer'>
+            <li><a href = '#Introduction'>📌Introduction</a></li>
+            <li><a href = '#objectives'>🎯Objectives</a></li>
+            <li><a href = '#dataset'>📃Data Set</a></li>
+            <li><a href = '#libraries'>📖Libraries</a></li>
+            <li><a href = '#models'>⚙️Models</a></li>
+            <li><a href = '#goal'>⚽Project Goal</a></li>
+        </footer>
+
+        <div class = 'others'>
+            <li>Email</li>
+            <li><a href='#'></a></li>
+        </div>
+    </div>
+
+    <style>
+        .footer li{
+            list-style:None;
+            line-height:1;
+        }
+
+        .footer a{
+            text-decoration:None;
+            color:white;
+            font-size:12px;
+            
+        }
+
+        footer{
+            margin-top:50px;
+            padding:20px 20px;
+            width:100%;
+            background-color:black;
+            bottom:0;
+
+        }
+
+        .container{
+            display:flex;
+            flex:1;
+        }
+    </style>
+""",unsafe_allow_html=True)
