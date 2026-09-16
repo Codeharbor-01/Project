@@ -224,7 +224,7 @@ sns.lineplot(avg_prev_vs_avg_final_grade,x='study_time_hours',y='Average_Previou
 plt.tight_layout()
 plt.subplots_adjust(hspace=1)
 tab2.pyplot(fig5)
-
+tab2.divider()
 tab2.subheader('Gender vs Internet Access')
 
 gender_vs_internet_access = df.groupby(['gender','internet_access']).size().reset_index(name='Number of Students')
@@ -234,6 +234,7 @@ fig6,ax = plt.subplots()
 ax.set_xlabel('Gender')
 sns.barplot(gender_vs_internet_access,x='gender',y='Number of Students',hue='internet_access')
 tab2.pyplot(fig6)
+tab2.divider()
 
 tab2.subheader("Numerical Columns' Heatmap")
 numerical_cols = df.select_dtypes(['int','float']).corr()
@@ -241,4 +242,20 @@ numerical_cols = df.select_dtypes(['int','float']).corr()
 fig7,ax = plt.subplots()
 sns.heatmap(numerical_cols,annot=True,cmap='coolwarm',fmt='.2f',ax=ax)
 tab2.pyplot(fig7)
+tab2.divider()
 
+tab2.subheader('Final Exam Score Distribution')
+fig8,ax = plt.subplots()
+sns.histplot(df,x='final_exam_score',bins=10,kde=True,ax=ax)
+
+ax.set_xlabel('Final Exam Score')
+ax.set_ylabel('Number of students')
+tab2.pyplot(fig8)
+
+tab3.header('Findings')
+tab3.markdown("""
+    <div class='tab'>
+        <p class='number'>1</p>
+        <p class='title'>Academic Performance
+    </div>
+""",unsafe_allow_html=True)
