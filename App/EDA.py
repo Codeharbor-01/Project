@@ -253,9 +253,61 @@ ax.set_ylabel('Number of students')
 tab2.pyplot(fig8)
 
 tab3.header('Findings')
-tab3.markdown("""
-    <div class='tab'>
-        <p class='number'>1</p>
-        <p class='title'>Academic Performance
-    </div>
+tab3.subheader('1. Overall Academic Performance')
+
+tab3.markdown(f"""
+<div class='academic_performance'>
+    <table>
+        <tr>
+            <th>Measure</th>
+            <th>Previous Grade</th>
+            <th>Final Exam Score</th>
+        </tr>
+        <tr>
+            <th>Mean</th>
+            <td>{df['previous_grade'].mean().round(2)}</td>
+            <td>{df['final_exam_score'].mean().round(2)}</td>
+        </tr>
+        <tr>
+            <th>Minimum</th>
+            <td>{df['previous_grade'].min()}</td>
+            <td>{df['final_exam_score'].min()}</td>
+        </tr>
+        <tr>
+            <th>Maximum</th>
+            <td>{df['previous_grade'].max()}</td>
+            <td>{df['final_exam_score'].max()}</td>
+        </tr>
+        <tr>
+            <th>Standard Deviation</th>
+            <td>{df['previous_grade'].std().round(2)}</td>
+            <td>{df['final_exam_score'].std().round(2)}</td>
+        </tr>
+    </table>
+</div>
+
+<style>
+    .academic_performance table{{
+        width:100%;
+    }}
+</style>
 """,unsafe_allow_html=True)
+tab3.divider()
+
+tab3.subheader('2. Student Background Summary')
+tab3.markdown('The table below shows the count of students with **Internet Access** and involved in **Part time job** and **Extracurricular activites**.')
+performance_table = {
+    'Values':[True,False],
+    'Internet Access':df['internet_access'].value_counts(),
+    'Part-Time Job':df['part_time_job'].value_counts(),
+    'Extracurricular Activities':df['extracurricular_activities'].value_counts()
+}
+
+tab3.dataframe(performance_table)
+tab3.divider()
+
+tab3.subheader('3. Correlation Analysis')
+tab3.markdown('This section examines the relationships between selected numerical variables in the dataset. ' \
+'The correlation values help identify the strength and direction of relationships between factors such as study time, attendance, sleep hours, previous grades, and final exam scores.')
+correlation_table = numerical_cols.corr()
+tab3.dataframe(correlation_table)
