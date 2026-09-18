@@ -48,4 +48,9 @@ grid_model = GridSearchCV(pipe,param_grid=params,cv=10,scoring='neg_mean_squared
 grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
-joblib.dump(best_model,'Pkl Files/KNNRegressionModel.pkl')
+
+def get_KNN_score():
+    KNN_score = grid_model.best_score_
+    return KNN_score
+
+joblib.dump(best_model,'Pkl_Files/KNNRegressionModel.pkl')

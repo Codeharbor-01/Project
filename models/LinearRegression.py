@@ -42,7 +42,13 @@ param_grid = {
     'regressor__positive':[True,False]
 }
 
-model = GridSearchCV(pipe,param_grid=param_grid,cv=5,scoring='r2')
-model.fit(x_train,y_train)
-best_model = model.best_estimator_
-joblib.dump(best_model,'Pkl Files/LinearModel.pkl')
+grid_model = GridSearchCV(pipe,param_grid=param_grid,cv=5,scoring='r2')
+grid_model.fit(x_train,y_train)
+best_model = grid_model.best_estimator_
+
+def get_linear_score():
+
+    linear_score = grid_model.best_score_
+    return linear_score
+
+joblib.dump(best_model,'Pkl_Files/LinearModel.pkl')
