@@ -252,8 +252,37 @@ ax.set_xlabel('Final Exam Score')
 ax.set_ylabel('Number of students')
 tab2.pyplot(fig8)
 
+
+
 tab3.header('Findings')
 tab3.subheader('1. Overall Academic Performance')
+
+box = tab3.container(border=True)
+
+c1,c2,c3 = box.columns(3)
+        
+c1.metric(
+    "Average Final Exam Score",
+    df['final_exam_score'].mean().round(2),
+    (df['final_exam_score'].mean()-df['previous_grade'].mean()).round(2),
+    delta_color='normal'
+)
+
+c2.metric(
+    "Average Previous Grade",
+    df['previous_grade'].mean().round(2),
+    abs((df['previous_grade'].mean()-df['final_exam_score'].mean()).round(2)),
+    delta_arrow='down',
+    delta_color='red'
+)
+
+c3.metric(
+    "Average Attendance Percent",
+    f"{df['attendance_percent'].mean().round(2)}%",
+    'High Attendance',
+    delta_arrow='off',
+    delta_color='blue'
+)
 
 tab3.markdown(f"""
 <div class='academic_performance'>
@@ -297,7 +326,7 @@ tab3.divider()
 tab3.subheader('2. Student Background Summary')
 tab3.markdown('The table below shows the count of students with **Internet Access** and involved in **Part time job** and **Extracurricular activites**.')
 performance_table = {
-    'Values':[True,False],
+    'Values':['True','False'],
     'Internet Access':df['internet_access'].value_counts(),
     'Part-Time Job':df['part_time_job'].value_counts(),
     'Extracurricular Activities':df['extracurricular_activities'].value_counts()
@@ -311,3 +340,14 @@ tab3.markdown('This section examines the relationships between selected numerica
 'The correlation values help identify the strength and direction of relationships between factors such as study time, attendance, sleep hours, previous grades, and final exam scores.')
 correlation_table = numerical_cols.corr()
 tab3.dataframe(correlation_table)
+tab3.divider()
+
+tab3.subheader('Conclusion')
+tab3.markdown("" \
+    "The exploratory data analysis provided useful insights into student academic performance. " \
+    "**Previous grades, study time, and attendance** showed meaningful relationships with **final exam scores**, " \
+    "while other student characteristics provided additional context. The analysis also confirmed that" \
+    " the dataset is suitable for further machine learning analysis. Overall, these findings help identify" \
+    " relevant features that can be used to develop and evaluate models for predicting students' final exam scores.")
+
+# st.download_button(label='Download Report',data=EDA.py)
