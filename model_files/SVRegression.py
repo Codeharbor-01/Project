@@ -43,7 +43,7 @@ params = {
     'regressor__kernel':['linear','rbf','poly']
 }
 
-grid_model = GridSearchCV(pipe,param_grid=params,cv=10,scoring='neg_mean_squared_error')
+grid_model = GridSearchCV(pipe,param_grid=params,cv=10,scoring='r2')
 grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
