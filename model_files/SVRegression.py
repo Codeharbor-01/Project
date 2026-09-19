@@ -48,9 +48,5 @@ grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
 
-def get_SVR_score():
-
-    SVR_score = grid_model.best_score_
-    return SVR_score
-
 joblib.dump(best_model,'Pkl_Files/SVRModel.pkl')
+joblib.dump(grid_model.best_score_,'Scores/SVR_Score.pkl')

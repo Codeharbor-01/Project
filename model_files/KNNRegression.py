@@ -49,8 +49,5 @@ grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
 
-def get_KNN_score():
-    KNN_score = grid_model.best_score_
-    return KNN_score
-
 joblib.dump(best_model,'Pkl_Files/KNNRegressionModel.pkl')
+joblib.dump(grid_model.best_score_,"Scores/KNN_Score.pkl")
