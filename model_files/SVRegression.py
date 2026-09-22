@@ -1,6 +1,7 @@
 import pandas as pd
 import joblib
 
+from sklearn.metrics import r2_score,mean_absolute_error,root_mean_squared_error
 from sklearn.preprocessing import StandardScaler,OrdinalEncoder
 from category_encoders import BinaryEncoder
 from sklearn.model_selection import train_test_split
@@ -48,5 +49,17 @@ grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
 
+y_pred=best_model.predict(x_test)
+
+r2 = r2_score(y_test,y_pred)
+mae = mean_absolute_error(y_test,y_pred)
+rmse = root_mean_squared_error(y_test,y_pred)
+
+scores = {
+    'r2':r2,
+    'mae':mae,
+    'rmse':rmse
+}
+
 joblib.dump(best_model,'Pkl_Files/SVRModel.pkl')
-joblib.dump(grid_model.best_score_,'Scores/SVR_Score.pkl')
+joblib.dump(scores,'Scores/SVR_Scores.pkl')
