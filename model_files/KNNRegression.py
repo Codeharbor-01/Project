@@ -40,7 +40,7 @@ pipe = Pipeline(
 )
 
 params = {
-    'regressor__n_neighbors': range(1, 21),
+    'regressor__n_neighbors': [2,3,5,7,9,11,15,20,25],
     'regressor__weights': ['uniform', 'distance'],
     'regressor__p': [1, 2]
 }

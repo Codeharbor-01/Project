@@ -85,7 +85,7 @@ user_data={
 }
 
 user_df = pd.DataFrame(user_data)
-if submitted:
+if True:
     st.header('Prediction')
     st.warning("⚠️The following prediction is just the estimated outcome. Results may vary on user's hardwork and action.")
 
@@ -93,111 +93,106 @@ if submitted:
     KNN_model = joblib.load('Pkl_Files/KNNRegressionModel.pkl')
     SVR_model = joblib.load('Pkl_Files/SVRModel.pkl')
 
-    linear_score = joblib.load('Scores/Linear_Score.pkl')
-    KNN_score = joblib.load('Scores/KNN_Score.pkl')
-    SVR_score = joblib.load('Scores/SVR_Score.pkl')
-
-    scores = [linear_score,KNN_score,SVR_score]
-    best_score = max(scores)
+    linear_scores = joblib.load('Scores/Linear_Score.pkl')
+    KNN_scores = joblib.load('Scores/KNN_Score.pkl')
+    SVR_scores = joblib.load('Scores/SVR_Scores.pkl')
 
     model_li = [linear_model,KNN_model,SVR_model]
+    st.text(linear_scores)
+    st.text(KNN_scores)
+    st.text(SVR_scores)
 
-    best_score_index = scores.index(best_score)
-    best_score_model = model_li[best_score_index]
+#     container_box = st.container(border=True)
+#     container_box.markdown(f"""
+#         <div class='title'>
+#             <h3>Prediction Result</h3>
+#         </div>
 
-    prediction = best_score_model.predict(user_df)[0].round(2)
+#         <p class='col1'>
+#             <strong>Student Id : </strong> {id}
+#         </p>
 
-    container_box = st.container(border=True)
-    container_box.markdown(f"""
-        <div class='title'>
-            <h3>Prediction Result</h3>
-        </div>
-
-        <p class='col1'>
-            <strong>Student Id : </strong> {id}
-        </p>
-
-        <div class='columns'>
-            <p class='col1'>
-                <strong>Name : </strong>{fN} {mN} {lN}
-            </p>
-            <p class='col1'>
-                <strong>Gender : </strong> {gender}
-            </p>
+#         <div class='columns'>
+#             <p class='col1'>
+#                 <strong>Name : </strong>{fN} {mN} {lN}
+#             </p>
+#             <p class='col1'>
+#                 <strong>Gender : </strong> {gender}
+#             </p>
                         
-        </div>
+#         </div>
 
 
-        <div class='details'>
-            <h4>Student Details</h4>
-        </div>
+#         <div class='details'>
+#             <h4>Student Details</h4>
+#         </div>
 
-        <div class = 'res_table'>
-            <table>
-                <tr>
-                    <th>Study Hours</th>
-                    <td>{study_hours}</td>
-                </tr>
-                <tr>
-                    <th>Attendance Percent</th>
-                    <td>{attendance_percentage}%</td>
-                </tr>
-                <tr>
-                    <th>Sleep Hours</th>
-                    <td>{sleep_hours}</td>
-                </tr>
-                <tr>
-                    <th>Parental Education</th>
-                    <td>{parental_education}</td>
-                </tr>
-                <tr>
-                    <th>Availability</th>
-                    <td>{'<br>'.join(multi_options)}</td>
-                </tr>
-                <tr>
-                    <th>Previous Grade</th>
-                    <td>{previous_grade}</td>
-                </tr>
-            </table>
-        </div>
+#         <div class = 'res_table'>
+#             <table>
+#                 <tr>
+#                     <th>Study Hours</th>
+#                     <td>{study_hours}</td>
+#                 </tr>
+#                 <tr>
+#                     <th>Attendance Percent</th>
+#                     <td>{attendance_percentage}%</td>
+#                 </tr>
+#                 <tr>
+#                     <th>Sleep Hours</th>
+#                     <td>{sleep_hours}</td>
+#                 </tr>
+#                 <tr>
+#                     <th>Parental Education</th>
+#                     <td>{parental_education}</td>
+#                 </tr>
+#                 <tr>
+#                     <th>Availability</th>
+#                     <td>{'<br>'.join(multi_options)}</td>
+#                 </tr>
+#                 <tr>
+#                     <th>Previous Grade</th>
+#                     <td>{previous_grade}</td>
+#                 </tr>
+#             </table>
+#         </div>
 
-        div class='bottom_cols'>
-            <p><strong>Perfect Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong> 100%</p>
-            <p><strong>Pass Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong>40%</p>
-            <p><strong>Estimated Score : </strong>{prediction}%</p>
-            <p><strong>Estimated GPA &nbsp;&nbsp; : </strong>{(prediction/100)*4:.2f}
-        </div>
+#         div class='bottom_cols'>
+#             <p><strong>Perfect Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong> 100%</p>
+#             <p><strong>Pass Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong>40%</p>
+#             <p><strong>Estimated Score : </strong>{prediction}%</p>
+#             <p><strong>Estimated GPA &nbsp;&nbsp; : </strong>{(prediction/100)*4:.2f}
+#         </div>
 
-        <style>
-            .title{{
-                text-align:center;
-            }}
+#         <style>
+#             .title{{
+#                 text-align:center;
+#             }}
 
-            .res_table table{{
-                width:100%;
-            }}
+#             .res_table table{{
+#                 width:100%;
+#             }}
 
-            .columns{{
-                display:flex;
-                gap:400px;
-            }}
+#             .columns{{
+#                 display:flex;
+#                 gap:400px;
+#             }}
 
-            .details{{
-                margin-top:5px;
-            }}
+#             .details{{
+#                 margin-top:5px;
+#             }}
 
-            .bottom_cols p{{
-                text-align:left;
-                padding-left:72%;
-                margin:4px 0;
-            }}
+#             .bottom_cols p{{
+#                 text-align:left;
+#                 padding-left:72%;
+#                 margin:4px 0;
+#             }}
 
-            .bottom_cols p:last-child{{
-                padding-bottom:10px;
-            }}
+#             .bottom_cols p:last-child{{
+#                 padding-bottom:10px;
+#             }}
 
-            .res_table table tr:nth-child(odd){{
-                background-color:rgba(0,0,0,0.09)
-            }}
-        </style>
-""",unsafe_allow_html=True)
+#             .res_table table tr:nth-child(odd){{
+#                 background-color:rgba(0,0,0,0.09)
+#             }}
+#         </style>
+# """,unsafe_allow_html=True)

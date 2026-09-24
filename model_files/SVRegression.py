@@ -20,7 +20,7 @@ x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=
 num_columns = ['study_time_hours','attendance_percent','sleep_hours','previous_grade']
 ord_columns = ['parental_education']
 nom_columns = ['gender']
-bool_columns = ['internet_access','extracurricular_activities','part_time_job','Pass']
+bool_columns = ['internet_access','extracurricular_activities','part_time_job']
 
 education_order = ['High School','Bachelors','Masters','PhD']
 

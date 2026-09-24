@@ -2,20 +2,20 @@ import pandas as pd
 import joblib
 
 from sklearn.metrics import r2_score,mean_absolute_error,root_mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler,OrdinalEncoder
 from category_encoders import BinaryEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
-df = pd.read_csv(r"C:\Users\Asus\Desktop\Projects\Dataset\cleaned_student_data.csv")
+df = pd.read_csv(r'C:\Users\Asus\Desktop\Projects\Dataset\cleaned_student_data.csv')
 
 x = df.drop(columns=['student_id','final_exam_score','final_grade'])
 y = df['final_exam_score']
 
-x_train,x_test,y_train,y_test = train_test_split(x,y,random_state=42,test_size=0.2)
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
 
 num_columns = ['study_time_hours','attendance_percent','sleep_hours','previous_grade']
 ord_columns = ['parental_education']
@@ -35,21 +35,23 @@ preprocessor = ColumnTransformer(
 pipe = Pipeline(
     steps=[
         ('preprocessing',preprocessor),
-        ('regressor',LinearRegression())
+        ('regressor',RandomForestRegressor())
     ]
 )
 
-param_grid = {
-    'regressor__fit_intercept':[True,False],
-    'regressor__positive':[True,False]
+params = {
+    'regressor__n_estimators':range(10,101),
+    'regressor__max_depth':[None,10,20,30],
+    'regressor__min_samples_split':range(2,11),
+    'regressor__min_samples_leaf':range(1,6)
 }
 
-grid_model = GridSearchCV(pipe,param_grid=param_grid,cv=5,scoring='r2')
+grid_model = GridSearchCV(pipe,param_grid=params,cv=10,scoring='r2')
 grid_model.fit(x_train,y_train)
 
 best_model = grid_model.best_estimator_
 
-y_pred = best_model.predict(x_test)
+y_pred=best_model.predict(x_test)
 
 r2 = r2_score(y_test,y_pred)
 mae = mean_absolute_error(y_test,y_pred)
@@ -61,5 +63,5 @@ scores = {
     'rmse':rmse
 }
 
-joblib.dump(best_model,'Pkl_Files/LinearModel.pkl')
-joblib.dump(scores,'Scores/Linear_Score.pkl')
+joblib.dump(best_model,'Pkl_Files/RandomForestModel.pkl')
+joblib.dump(scores,'Scores/RandomForest_Scores.pkl')
