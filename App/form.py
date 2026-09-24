@@ -27,7 +27,13 @@ with st.form('Student Grade Prediction Form'):
     gender = st.selectbox(label='**Gender**',options=['Male','Female','Other'])
     gender_error = st.empty()
 
-    study_hours = st.number_input(label='**Study Hours**',step=1,min_value=0,max_value=10)
+    age = st.number_input(label='**Age**',min_value=18,max_value=30)
+    age_error = st.empty()
+
+    major = st.selectbox(label='**Major**',options=['Business','Computer Science','Economics','Engineering','Mathematics','Psychology'])
+    major_error = st.empty()
+
+    study_hours = st.number_input(label='**Study Hours**',step=1,min_value=0,max_value=14)
     std_hrs_error = st.empty()
 
     attendance_percentage = st.number_input(label='**Attendance Percent**',min_value=0,max_value=100,step=1)
@@ -36,15 +42,10 @@ with st.form('Student Grade Prediction Form'):
     sleep_hours = st.number_input(label='**Sleep Hours**',step=1,min_value=0,max_value=10)
     sleep_hrs_error = st.empty()
 
-    parental_education = st.selectbox(label='**ParentalEducation**',options=['High School','Bachelors','Masters','PhD'])
-    edu_error = st.empty()
+    social_interaction_hours = st.number_input(label='**Social Interaction Hours (Weekly)**',min_value=0,max_value=20)
+    social_error = st.empty()
 
-    multi_options = st.multiselect(label='**Availability**',options=['Internet Access','Extracurricular Activities','Part Time Job'],placeholder='Please select available options only.')
-    internet = 'Internet Access' in multi_options
-    eca = 'Extracurricular Activities' in multi_options
-    part_time_job = 'Part Time Job' in multi_options
-
-    previous_grade = st.number_input(label='**Previous Grade (0-100)**',step=0.1,min_value=0.0,max_value=100.0)
+    previous_cgpa = st.number_input(label='**Previous CGPA (0-4)**',step=1.00,min_value=0.00,max_value=4.00)
     grade_error = st.empty()
 
     submitted = st.form_submit_button(label='Submit')
@@ -62,7 +63,7 @@ with st.form('Student Grade Prediction Form'):
         elif not 3<=sleep_hours<=10:
             sleep_hrs_error.error('Sleep hour exceeds the range of 3 to 10')
 
-        fields = [fN,lN,gender,study_hours,attendance_percentage,sleep_hours,parental_education,previous_grade]
+        fields = [fN,lN,age,gender,major,study_hours,attendance_percentage,sleep_hours,social_interaction_hours,previous_cgpa]
 
         if not all(fields):
             st.error('Error submitting form. Please fill the required fields.')
@@ -70,129 +71,132 @@ with st.form('Student Grade Prediction Form'):
             with st.status('Submitting Form...') as status:
                 time.sleep(3)
                 status.update(label='Form Submitted Successfully!✅',state='complete')
-            st.divider()
 
 user_data={
-    'gender':[gender],
-    'study_time_hours':study_hours,
-    'attendance_percent':attendance_percentage,
-    'sleep_hours':sleep_hours,
-    'parental_education':parental_education,
-    'internet_access':[internet],
-    'extracurricular_activities':[eca],
-    'part_time_job':[part_time_job],
-    'previous_grade':previous_grade
+    'Gender':[gender],
+    'Age':age,
+    'Major':major,
+    'Attendance_Pct':attendance_percentage,
+    'Study_Hours_Per_Day':study_hours,
+    'Previous_CGPA':previous_cgpa,
+    'Sleep_Hours':sleep_hours,
+    'Social_Hours_Week':social_interaction_hours
 }
 
 user_df = pd.DataFrame(user_data)
-if True:
+if submitted:
+
+    st.divider()
     st.header('Prediction')
     st.warning("⚠️The following prediction is just the estimated outcome. Results may vary on user's hardwork and action.")
 
-    linear_model = joblib.load('Pkl_Files/LinearModel.pkl')
-    KNN_model = joblib.load('Pkl_Files/KNNRegressionModel.pkl')
-    SVR_model = joblib.load('Pkl_Files/SVRModel.pkl')
+    linear_model = joblib.load(r'Pkl_Files/LinearModel.pkl')
+    KNN_model = joblib.load(r'Pkl_Files/KNNRegressionModel.pkl')
+    SVR_model = joblib.load(r'Pkl_Files/SVRModel.pkl')
+    RandomForest_model = joblib.load(r'Pkl_Files\RandomForestModel.pkl')
 
-    linear_scores = joblib.load('Scores/Linear_Score.pkl')
-    KNN_scores = joblib.load('Scores/KNN_Score.pkl')
-    SVR_scores = joblib.load('Scores/SVR_Scores.pkl')
+    linear_scores = joblib.load(r'Scores/Linear_Score.pkl')
+    KNN_scores = joblib.load(r'Scores/KNN_Score.pkl')
+    SVR_scores = joblib.load(r'Scores/SVR_Scores.pkl')
+    RandomForest_scores = joblib.load(r'Scores\RandomForest_Scores.pkl')
 
-    model_li = [linear_model,KNN_model,SVR_model]
-    st.text(linear_scores)
-    st.text(KNN_scores)
-    st.text(SVR_scores)
+    model_li = [linear_model,KNN_model,SVR_model,RandomForest_model]
+    model_scores = [linear_scores,KNN_scores,SVR_scores,RandomForest_scores]
+    best_score = max(model_scores,key=lambda x:x['r2'])
+    best_score_index = model_scores.index(best_score)
+    best_model = model_li[best_score_index]
 
-#     container_box = st.container(border=True)
-#     container_box.markdown(f"""
-#         <div class='title'>
-#             <h3>Prediction Result</h3>
-#         </div>
+    prediction = best_model.predict(user_df)
 
-#         <p class='col1'>
-#             <strong>Student Id : </strong> {id}
-#         </p>
+    container_box = st.container(border=True)
+    container_box.markdown(f"""
+        <div class='title'>
+            <h3>Prediction Result</h3>
+        </div>
 
-#         <div class='columns'>
-#             <p class='col1'>
-#                 <strong>Name : </strong>{fN} {mN} {lN}
-#             </p>
-#             <p class='col1'>
-#                 <strong>Gender : </strong> {gender}
-#             </p>
+        <p class='col1'>
+            <strong>Student ID : </strong> {id}
+        </p>
+
+        <div class='columns'>
+            <p class='col1'>
+                <strong>Name : </strong>{fN} {mN} {lN}
+            </p>
+            <p class='col1'>
+                <strong>Gender : </strong> {gender}
+            </p>
                         
-#         </div>
+        </div>
 
 
-#         <div class='details'>
-#             <h4>Student Details</h4>
-#         </div>
+        <div class='details'>
+            <h4>Student Details</h4>
+        </div>
 
-#         <div class = 'res_table'>
-#             <table>
-#                 <tr>
-#                     <th>Study Hours</th>
-#                     <td>{study_hours}</td>
-#                 </tr>
-#                 <tr>
-#                     <th>Attendance Percent</th>
-#                     <td>{attendance_percentage}%</td>
-#                 </tr>
-#                 <tr>
-#                     <th>Sleep Hours</th>
-#                     <td>{sleep_hours}</td>
-#                 </tr>
-#                 <tr>
-#                     <th>Parental Education</th>
-#                     <td>{parental_education}</td>
-#                 </tr>
-#                 <tr>
-#                     <th>Availability</th>
-#                     <td>{'<br>'.join(multi_options)}</td>
-#                 </tr>
-#                 <tr>
-#                     <th>Previous Grade</th>
-#                     <td>{previous_grade}</td>
-#                 </tr>
-#             </table>
-#         </div>
+        <div class = 'res_table'>
+            <table>
+                <tr>
+                    <th>Major</th>
+                    <td>{major}</td>
+                </tr>
+                <tr>
+                    <th>Study Hours</th>
+                    <td>{study_hours}</td>
+                </tr>
+                <tr>
+                    <th>Attendance Percent</th>
+                    <td>{attendance_percentage}%</td>
+                </tr>
+                <tr>
+                    <th>Sleep Hours</th>
+                    <td>{sleep_hours}</td>
+                </tr>
+                <tr>
+                    <th>Social Interaction Hours</th>
+                    <td>{social_interaction_hours}</td>
+                </tr>
+                <tr>
+                    <th>Previous CGPA</th>
+                    <td>{previous_cgpa}</td>
+                </tr>
+            </table>
+        </div>
 
-#         div class='bottom_cols'>
-#             <p><strong>Perfect Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong> 100%</p>
-#             <p><strong>Pass Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong>40%</p>
-#             <p><strong>Estimated Score : </strong>{prediction}%</p>
-#             <p><strong>Estimated GPA &nbsp;&nbsp; : </strong>{(prediction/100)*4:.2f}
-#         </div>
+        <div class='bottom_cols'>
+            <p><strong>Perfect Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </strong> 4.00</p>
+            <p><strong>Estimated CGPA : </strong>{prediction[0].round(2)}</p>
+        </div>
 
-#         <style>
-#             .title{{
-#                 text-align:center;
-#             }}
+        <style>
+            .title{{
+                text-align:center;
+            }}
 
-#             .res_table table{{
-#                 width:100%;
-#             }}
+            .res_table table{{
+                width:100%;
+            }}
 
-#             .columns{{
-#                 display:flex;
-#                 gap:400px;
-#             }}
+            .columns{{
+                display:flex;
+                gap:400px;
+            }}
 
-#             .details{{
-#                 margin-top:5px;
-#             }}
+            .details{{
+                margin-top:5px;
+            }}
 
-#             .bottom_cols p{{
-#                 text-align:left;
-#                 padding-left:72%;
-#                 margin:4px 0;
-#             }}
+            .bottom_cols p{{
+                text-align:left;
+                padding-left:72%;
+                margin:4px 0;
+            }}
 
-#             .bottom_cols p:last-child{{
-#                 padding-bottom:10px;
-#             }}
+            .bottom_cols p:last-child{{
+                padding-bottom:10px;
+            }}
 
-#             .res_table table tr:nth-child(odd){{
-#                 background-color:rgba(0,0,0,0.09)
-#             }}
-#         </style>
-# """,unsafe_allow_html=True)
+            .res_table table tr:nth-child(odd){{
+                background-color:rgba(0,0,0,0.09)
+            }}
+        </style>
+""",unsafe_allow_html=True)
