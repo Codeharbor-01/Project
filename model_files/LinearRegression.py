@@ -12,22 +12,28 @@ from sklearn.model_selection import GridSearchCV
 
 df = pd.read_csv(r"C:\Users\Asus\Desktop\Projects\Dataset\cleaned_student_data.csv")
 
-x = df.drop(columns=['student_id','final_exam_score','final_grade'])
-y = df['final_exam_score']
+x = df.drop(columns=['Student_ID','Final_CGPA'])
+y = df['Final_CGPA']
 
 x_train,x_test,y_train,y_test = train_test_split(x,y,random_state=42,test_size=0.2)
 
-num_columns = ['study_time_hours','attendance_percent','sleep_hours','previous_grade']
-ord_columns = ['parental_education']
-nom_columns = ['gender']
-bool_columns = ['internet_access','extracurricular_activities','part_time_job']
+num_columns = [
+    'Age',
+    'Attendance_Pct',
+    'Study_Hours_Per_Day',
+    'Previous_CGPA',
+    'Sleep_Hours',
+    'Social_Hours_Week'
+]
+nom_columns = [
+    'Gender',
+    'Major'
+]
 
-education_order = ['High School','Bachelors','Masters','PhD']
 
 preprocessor = ColumnTransformer(
     transformers=[
         ('num_scaled',StandardScaler(),num_columns),
-        ('ord_encoded',OrdinalEncoder(categories=[education_order]),ord_columns),
         ('nom_encoded',BinaryEncoder(),nom_columns)
     ],remainder='passthrough'
 )
