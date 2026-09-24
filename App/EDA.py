@@ -141,10 +141,12 @@ col4.markdown(f"""
     </div>
 """,unsafe_allow_html=True)
 
-tab2.header("Data Analysis",anchor='analysis')
-st.markdown("""
+tab1.divider()
 
-""")
+tab1.subheader('**Data Description**')
+tab1.dataframe(df.describe())
+tab2.header("Data Analysis",anchor='analysis')
+
 fig1,ax = plt.subplots()
 tab2.subheader('Gender vs Final CGPA')
 gender_avg = df.groupby('Gender').agg(
