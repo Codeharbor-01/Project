@@ -33,6 +33,36 @@ chart = st.selectbox(label='Chart',options=available_options)
 if chart=='Bar Chart':
     fig,ax = plt.subplots()
     sns.barplot(modified_df,x=X,y=Y,ax=ax)
+    plt.tight_layout()
     for container in ax.containers:
-        plt.bar_label(container,fmt='%2f')
+        plt.bar_label(container,fmt='%.2f',padding=-120,color='white')
     st.pyplot(fig)
+
+elif chart=='Box Plot':
+    fig,ax = plt.subplots()
+    sns.boxplot(modified_df,x=X,y=Y,ax=ax)
+    plt.tight_layout()
+    st.pyplot(fig)
+
+elif chart=='Scatter Plot':
+    fig,ax = plt.subplots()
+    sns.scatterplot(modified_df,x=X,y=Y,ax=ax)
+    plt.tight_layout()
+    st.pyplot(fig)
+
+elif chart=='Line Chart':
+    fig,ax = plt.subplots()
+    sns.lineplot(modified_df,x=X,y=Y,ax=ax)
+    plt.tight_layout()
+    st.pyplot(fig)
+
+elif chart=='Violin Plot':
+    fig,ax=plt.subplots()
+    sns.violinplot(modified_df,x=X,y=Y,ax=ax)
+    plt.tight_layout()
+    st.pyplot(fig)
+
+st.divider()
+st.markdown("""
+    <a href="">Click Here!</a>
+""",unsafe_allow_html=True)
