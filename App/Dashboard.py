@@ -5,12 +5,6 @@ import seaborn as sns
 import joblib
 
 st.set_page_config('Student Grade Prediction System')
-# fig,ax = plt.subplots(figsize=(6,3))
-
-# histogram = sns.histplot(df['final_exam_score'],kde=True,ax=ax)
-
-# plt.savefig('IconsAndImages/exam_score_hist')
-# st.pyplot(fig)
 
 col1,col2 = st.columns([2,1])
 col1.title('Student Grade Prediction System')
@@ -213,24 +207,38 @@ st.markdown("""
                 <strong>🌀SVR Model</strong>
             </p>
             <p>
-                Linear Regression predicts a numerical score by finding a linear relationship between student features and the final exam score.<br>
+                Support Vector Regression (SVR) predicts a numerical score by finding a function that fits the student data while allowing a certain margin of error.
                 <br>
-                Works well when relationships between features and the target are approximately linear.
+                Works well when relationships between student features and the target are complex and not strictly linear.
+            </p>
+        </div>
+    </div>
+
+    <div class ='RandomForest'>
+        <p class = 'num'>4️⃣</p>
+        <div class = 'text'>
+            <p class = 'title1'>
+                <strong>🌲Random Forest Model</strong>
+            </p>
+            <p>
+                Random Forest predicts a numerical score by combining predictions from multiple decision trees built from different parts of the dataset.
+                <br><br>
+                Works well when relationships between student features and the target are complex and can capture non-linear patterns in academic performance.
             </p>
         </div>
     </div>
 
     <style>
 
-        .KNN .num{
+        .KNN .num, .linear .num, .SVR .num,.RandomForest .num{
             font-size:90px;
             padding:20px 10px;
         }
 
-        .KNN .title1{
+        .KNN .title1, .linear .title1, .SVR .title1,.RandomForest .title1{
             font-size:25px;
         }
-        .KNN{
+        .KNN,.linear,.SVR,.RandomForest{
             padding:20px 20px;
             display:flex;
             gap:60px;
@@ -242,49 +250,7 @@ st.markdown("""
             transition:0.3s;
         }
 
-        .linear .num{
-            font-size:90px;
-            padding:20px 10px;
-        }
-        
-        .linear .title1{
-            font-size:25px;
-        }
-
-        .linear{
-            padding:20px 20px;
-            display:flex;
-            gap:60px;
-            flex:1;
-            border:1px solid black;
-            border-radius:10px;
-            box-shadow: 0 2px 10px lightgrey;
-            margin-bottom:20px;
-            transition:0.3s;
-        }
-
-        .SVR .num{
-            font-size:90px;
-            padding:20px 10px;
-        }
-    
-        .SVR .title1{
-            font-size:25px;
-        }
-        
-        .SVR{
-            padding:20px 20px;
-            display:flex;
-            gap:60px;
-            flex:1;
-            border:1px solid black;
-            border-radius:10px;
-            box-shadow: 0 2px 10px lightgrey;
-            margin-bottom:20px;
-            transition:0.3s;
-        }
-
-        .KNN:hover,.linear:hover,.SVR:hover{
+        .KNN:hover,.linear:hover,.SVR:hover,.RandomForest:hover{
             transform:translateY(-1px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
