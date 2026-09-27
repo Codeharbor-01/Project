@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-df = pd.read_csv(r'Dataset\cleaned_student_data.csv')
+df = pd.read_csv(r'Dataset/cleaned_student_data.csv')
 modified_df = df.drop(columns='Student_ID')
 st.header('**👀 Data Visualization (Dynamic)**')
 st.text('This page allows users to dynamically view datasets by selecting respective columns.' \

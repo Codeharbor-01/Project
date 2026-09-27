@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-uncleaned_file_path = r'Dataset\Student_data.csv'
+uncleaned_file_path = r'Dataset/Student_data.csv'
 uncleaned_df = pd.read_csv(uncleaned_file_path)
 
-cleaned_file_path = r'Dataset\cleaned_student_data.csv'
+cleaned_file_path = r'Dataset/cleaned_student_data.csv'
 df = pd.read_csv(cleaned_file_path)
 
 st.title('EDA Report',anchor='title')

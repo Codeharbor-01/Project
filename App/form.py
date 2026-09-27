@@ -93,12 +93,12 @@ if submitted:
     linear_model = joblib.load(r'Pkl_Files/LinearModel.pkl')
     KNN_model = joblib.load(r'Pkl_Files/KNNRegressionModel.pkl')
     SVR_model = joblib.load(r'Pkl_Files/SVRModel.pkl')
-    RandomForest_model = joblib.load(r'Pkl_Files\RandomForestModel.pkl')
+    RandomForest_model = joblib.load(r'Pkl_Files/RandomForestModel.pkl')
 
     linear_scores = joblib.load(r'Scores/Linear_Score.pkl')
     KNN_scores = joblib.load(r'Scores/KNN_Score.pkl')
     SVR_scores = joblib.load(r'Scores/SVR_Scores.pkl')
-    RandomForest_scores = joblib.load(r'Scores\RandomForest_Scores.pkl')
+    RandomForest_scores = joblib.load(r'Scores/RandomForest_Scores.pkl')
 
     model_li = [linear_model,KNN_model,SVR_model,RandomForest_model]
     model_scores = [linear_scores,KNN_scores,SVR_scores,RandomForest_scores]

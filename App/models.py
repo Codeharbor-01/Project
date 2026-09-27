@@ -171,7 +171,7 @@ st.divider()
 linear_scores = joblib.load(r'Scores/Linear_Score.pkl')
 KNN_scores = joblib.load(r'Scores/KNN_Score.pkl')
 SVR_scores = joblib.load(r'Scores/SVR_Scores.pkl')
-RandomForest_scores = joblib.load(r'Scores\RandomForest_Scores.pkl')
+RandomForest_scores = joblib.load(r'Scores/RandomForest_Scores.pkl')
 
 scores_dict = {
     'Models':[
