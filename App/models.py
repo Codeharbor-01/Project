@@ -243,7 +243,7 @@ st.markdown(f"""
         }}
 
         .leaderboard_table #second{{
-            background-color:rgba(229,228,226,0.3)
+            background-color:rgba(229,228,226,0.5)
             color:black;
         }}
 
