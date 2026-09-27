@@ -90,7 +90,7 @@ st.markdown("""
 """,unsafe_allow_html=True)
 
 st.subheader('📃DataSet',anchor='dataset')
-df = pd.read_csv(r'Dataset\cleaned_student_data.csv')
+df = pd.read_csv(r'Dataset/cleaned_student_data.csv')
 
 def randomizer():
     number = 5
