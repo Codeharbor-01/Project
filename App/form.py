@@ -58,9 +58,7 @@ with st.form('Student Grade Prediction Form'):
         if not 0<study_hours<=10:
             std_hrs_error.error('Study hour exceeds the range of 0 to 10.')
 
-        if not sleep_hours:
-            sleep_hrs_error.error('Field cannot be empty.')
-        elif not 3<=sleep_hours<=10:
+        if not 3<=sleep_hours<=10:
             sleep_hrs_error.error('Sleep hour exceeds the range of 3 to 10')
 
         fields = [fN,lN,age,gender,major,study_hours,attendance_percentage,sleep_hours,social_interaction_hours,previous_cgpa]
